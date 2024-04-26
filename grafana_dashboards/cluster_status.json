@@ -1,0 +1,515 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.2"
+    },
+    {
+      "type": "panel",
+      "id": "grafana-polystat-panel",
+      "name": "Polystat",
+      "version": "2.1.9"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    }
+  ],
+  "annotations": {
+    "enable": false,
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "#### _Warning(yellow)_\n###### &emsp; if one or more of the following conditions are true:\n  * Idle CPU is less than 20%.\n  * Load is higher than 5\n  * Free memory is less than 1000 MiB;\n  * Free space of \"/\" is less than 10 GiB;\n#### _Critial(red)_\n ###### &emsp; if one or more of the following conditions are true:\n  + Idle CPU is less than 5%.\n  + Load is higher than 10\n  + Free space of \"/\" is less than 1 GiB;\n  + Free memory is less than 100 MiB;\n\n----\n######   &emsp; The system load is defined as the number of runnable tasks in the run-queue and is provided by many operating systems as a one minute average.",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ]
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "nullPointMode": "connected",
+      "options": {
+        "autoSizeColumns": true,
+        "autoSizePolygons": true,
+        "autoSizeRows": true,
+        "compositeConfig": {
+          "animationSpeed": "2500",
+          "composites": [],
+          "enabled": true
+        },
+        "compositeGlobalAliasingEnabled": false,
+        "ellipseCharacters": 18,
+        "ellipseEnabled": false,
+        "globalAutoScaleFonts": true,
+        "globalClickthrough": "",
+        "globalClickthroughCustomTarget": "",
+        "globalClickthroughCustomTargetEnabled": false,
+        "globalClickthroughNewTabEnabled": false,
+        "globalClickthroughSanitizedEnabled": false,
+        "globalDecimals": 2,
+        "globalDisplayMode": "all",
+        "globalDisplayTextTriggeredEmpty": "OK",
+        "globalFillColor": "#0a55a1",
+        "globalFontSize": 12,
+        "globalGradientsEnabled": true,
+        "globalOperator": "mean",
+        "globalPolygonBorderColor": "#000000",
+        "globalPolygonBorderSize": 2,
+        "globalPolygonSize": 50,
+        "globalRegexPattern": "",
+        "globalShape": "hexagon_pointed_top",
+        "globalShowTimestampEnabled": false,
+        "globalShowTimestampFontSize": 12,
+        "globalShowTimestampFormat": "HH:mm:ss",
+        "globalShowTimestampPosition": "above_value",
+        "globalShowTimestampYOffset": 0,
+        "globalShowTooltipColumnHeadersEnabled": true,
+        "globalShowValueEnabled": true,
+        "globalTextFontAutoColor": "#000000",
+        "globalTextFontAutoColorEnabled": true,
+        "globalTextFontColor": "#000000",
+        "globalTextFontFamily": "Inter",
+        "globalThresholdsConfig": [],
+        "globalTooltipsEnabled": true,
+        "globalTooltipsFontFamily": "Inter",
+        "globalTooltipsShowTimestampEnabled": true,
+        "globalUnitFormat": "short",
+        "layoutDisplayLimit": 100,
+        "layoutNumColumns": 8,
+        "layoutNumRows": 8,
+        "overrideConfig": {
+          "overrides": []
+        },
+        "panelId": 0,
+        "radius": 100,
+        "sortByDirection": 1,
+        "sortByField": "name",
+        "tooltipDisplayMode": "all",
+        "tooltipDisplayTextTriggeredEmpty": "OK",
+        "tooltipPrimarySortByField": "thresholdLevel",
+        "tooltipPrimarySortDirection": 2,
+        "tooltipSecondarySortByField": "value",
+        "tooltipSecondarySortDirection": 2
+      },
+      "pluginVersion": "2.1.9",
+      "repeat": "fqdn",
+      "targets": [
+        {
+          "$$hashKey": "object:82",
+          "aggregation": "Last",
+          "alias": "Idle CPU (%)",
+          "crit": 5,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "decimals": 2,
+          "displayAliasType": "Always",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "aggregation.cpu-average.cpu.idle",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"value\") FROM \"aggregation.cpu-average.cpu.idle\" WHERE \"fqdn\" =~ /^$fqdn$/ AND $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fqdn::tag",
+              "operator": "=~",
+              "value": "/^$fqdn$/"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 20
+        },
+        {
+          "$$hashKey": "object:83",
+          "aggregation": "Last",
+          "alias": "Load",
+          "crit": 10,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "decimals": 2,
+          "displayAliasType": "Always",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"value\") FROM \"load.load.shortterm\" WHERE \"fqdn\" =~ /^$fqdn$/ AND $timeFilter\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        },
+        {
+          "$$hashKey": "object:84",
+          "aggregation": "Last",
+          "alias": "Free Memory (MiB)",
+          "crit": 100,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "decimals": 2,
+          "displayAliasType": "Always",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"value\")  / 1048576 FROM \"memory.free.memory\" WHERE \"fqdn\" =~ /^$fqdn$/ AND $timeFilter\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 1000
+        },
+        {
+          "$$hashKey": "object:85",
+          "aggregation": "Last",
+          "alias": "Free Space on Root (GiB)",
+          "crit": 1,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "decimals": 2,
+          "displayAliasType": "Always",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"value\")  / 1073844224 FROM \"df.root.df_complex.free\" WHERE \"fqdn\" =~ /^$fqdn$/ AND $timeFilter",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 10
+        },
+        {
+          "$$hashKey": "object:86",
+          "aggregation": "Last",
+          "alias": "Max Temperature(°C)",
+          "crit": 80,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "decimals": 2,
+          "displayAliasType": "Always",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"value\") FROM \"aggregation.sensors-max.temperature\" WHERE \"fqdn\" =~ /^$fqdn$/ AND $timeFilter",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 60
+        }
+      ],
+      "title": "$fqdn",
+      "type": "grafana-polystat-panel"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "$BARRELEYE_DATASOURCE_NAME"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Server Host Name",
+        "multi": true,
+        "name": "fqdn",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"memory.buffered.memory\" WITH KEY = fqdn",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "query0",
+        "options": [],
+        "query": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "InfluxDB",
+          "value": "HydPB2enz"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "BARRELEYE_DATASOURCE_NAME",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "1m"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "3h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "3d",
+      "4d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+  "timezone": "",
+  "title": "Cluster Status",
+  "uid": "yN2uB267k",
+  "version": 5,
+  "weekStart": ""
+}

@@ -1,0 +1,5804 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.2"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Free capacity on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "deckbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 71,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "Free Capacity",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "optype"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "cqm_ost_stats_bytes-optype-fs_name",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_kbytesinfo_free\" WHERE \"fs_name\" = '$fs_name'  AND \"ost_index\" = '$ost_index' AND $timeFilter GROUP BY \"ost_index\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            }
+          ]
+        }
+      ],
+      "title": "Free Capacity",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Used capacity on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "deckbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 72,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "Used Capacity",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "optype"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "cqm_ost_stats_bytes-optype-fs_name",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_kbytesinfo_used\" WHERE \"fs_name\" = '$fs_name'  AND \"ost_index\" = '$ost_index' AND $timeFilter GROUP BY \"ost_index\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            }
+          ]
+        }
+      ],
+      "title": "Used Capacity",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The used capacity for each user.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "deckbytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 80,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "UID=$tag_user_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "user_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_acctuser_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "usage_kbytes"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Used Capacity per User",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The used capacity for each group.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "deckbytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 81,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "GID=$tag_group_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "group_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_acctgroup_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "usage_kbytes"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Used Capacity per Group",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The used inode number for each user.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 82,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "UID=$tag_user_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "user_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_acctuser_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "usage_inodes"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Used Inode Number per User",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The used inode number for each group.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 83,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "GID=$tag_group_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "group_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_acctgroup_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "usage_inodes"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Used Inode Number per Group",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Free Inode Number on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 73,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "Free Inode Number",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "optype"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "cqm_ost_stats_bytes-optype-fs_name",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_filesinfo_free\" WHERE \"fs_name\" = '$fs_name'  AND \"ost_index\" = '$ost_index' AND $timeFilter GROUP BY \"ost_index\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            }
+          ]
+        }
+      ],
+      "title": "Free Inode Number",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Used Inode Number on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 74,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "Used Inode Number",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "optype"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "cqm_ost_stats_bytes-optype-fs_name",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_filesinfo_used\" WHERE \"fs_name\" = '$fs_name'  AND \"ost_index\" = '$ost_index' AND $timeFilter GROUP BY \"ost_index\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            }
+          ]
+        }
+      ],
+      "title": "Used Inode Number",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The I/O throughput on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 32
+      },
+      "id": 75,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "I/O Throughput",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "cqm_ost_stats_bytes-fs_name-ost_index",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_stats_bytes-fs_name-ost_index\" WHERE \"fs_name\" = '$fs_name' AND \"optype\" = 'write' AND $timeFilter GROUP BY \"ost_index\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "I/O Throughput",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The write throughput on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 32
+      },
+      "id": 84,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "Write Throughput",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_stats_bytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_stats_bytes-fs_name-optype-ost_index\" WHERE \"fs_name\" = '$fs_name' AND \"optype\" = 'write' AND $timeFilter GROUP BY \"ost_index\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "write"
+            }
+          ]
+        }
+      ],
+      "title": "Write Throughput",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The read throughput on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 32
+      },
+      "id": 85,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "Read Throughput",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_stats_bytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_stats_bytes-fs_name-optype-ost_index\" WHERE \"fs_name\" = '$fs_name' AND \"optype\" = 'write' AND $timeFilter GROUP BY \"ost_index\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "read"
+            }
+          ]
+        }
+      ],
+      "title": "Read Throughput",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 40
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "4k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_brw_stats_rpc_bulk_samples\" WHERE \"size\" = '1_pages' AND \"field\" = 'write_sample' AND \"fs_name\" = '$fs_name' AND \"ost_index\" = '$ost_index' AND $timeFilter",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "1_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "8k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"ost_brw_stats_rpc_bulk_samples\" WHERE \"size\" = '2_pages' AND \"field\" = 'write_sample' AND \"fs_name\" = '$fs_name' AND \"ost_index\" = '$ost_index' AND $timeFilter",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "2_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "16k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"ost_brw_stats_rpc_bulk_samples\" WHERE \"size\" = '4_pages' AND \"field\" = 'write_sample' AND \"fs_name\" = '$fs_name' AND \"ost_index\" = '$ost_index' AND $timeFilter",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "4_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "32k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "8_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "64k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "16_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "128k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "32_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "256k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "64_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "512k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "H",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "128_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "2m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "I",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "512_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "1m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "J",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "256_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "4m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "K",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "1K_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "8m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "L",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "2K_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "16m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "M",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "4K_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Write Bulk RPC Rate per Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 40
+      },
+      "id": 54,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Size Distribution of Write Bulk RPC",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 40
+      },
+      "id": 77,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "4k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_brw_stats_rpc_bulk_samples\" WHERE \"size\" = '1_pages' AND \"field\" = 'write_sample' AND \"fs_name\" = '$fs_name' AND \"ost_index\" = '$ost_index' AND $timeFilter",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "1_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "8k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"ost_brw_stats_rpc_bulk_samples\" WHERE \"size\" = '2_pages' AND \"field\" = 'write_sample' AND \"fs_name\" = '$fs_name' AND \"ost_index\" = '$ost_index' AND $timeFilter",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "2_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "16k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"ost_brw_stats_rpc_bulk_samples\" WHERE \"size\" = '4_pages' AND \"field\" = 'write_sample' AND \"fs_name\" = '$fs_name' AND \"ost_index\" = '$ost_index' AND $timeFilter",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "4_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "32k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "8_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "64k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "16_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "128k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "32_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "256k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "64_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "512k",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "H",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "128_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "2m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "I",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "512_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "1m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "J",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "256_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "4m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "K",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "1K_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "8m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "L",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "2K_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        },
+        {
+          "alias": "16m",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "M",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "size",
+              "operator": "=",
+              "value": "4K_pages"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Read Bulk RPC Rate per Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 40
+      },
+      "id": 78,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_rpc_bulk_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Size Distribution of Read Bulk RPC",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "If the next page to be written or read in the I/O is not with the next offset, that page is a discontinuous page. There could be multiple discontinuous pages in an I/O. I/Os with less discontinuous pages are more friendly to OSDs.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 48
+      },
+      "id": 56,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_page_discontiguous_rpc_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_page_discontiguous_rpc_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'write_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Discontinuous Pages in Each Write I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "If the next page to be written or read in the I/O is not with the next offset, that page is a discontinuous page. There could be multiple discontinuous pages in an I/O. I/Os with less discontinuous pages are more friendly to OSDs.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 48
+      },
+      "id": 57,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_page_discontiguous_rpc_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_page_discontiguous_rpc_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'read_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Discontinuous Pages in Each Read I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "If the next block to be written or read in the I/O is not with the next offset, that block is a discontinuous block. There could be multiple discontinuous block in an I/O. I/Os with less discontinuous blocks are more friendly to OSDs. One page contains multiple blocks. The block size is determined by underline file system (Ldiskfs or ZFS).",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 48
+      },
+      "id": 59,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_block_discontiguous_rpc_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_brw_stats_block_discontiguous_rpc_samples\" WHERE (\"fs_name\" = '$fs_name' AND \"field\" = 'write_sample' AND \"ost_index\" = '$ost_index') AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Discontinuous Blocks in Each Write I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "If the next block to be written or read in the I/O is not with the next offset, that block is a discontinuous block. There could be multiple discontinuous block in an I/O. I/Os with less discontinuous blocks are more friendly to OSDs. One page contains multiple blocks. The block size is determined by underline file system (Ldiskfs or ZFS).",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 48
+      },
+      "id": 60,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_block_discontiguous_rpc_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"ost_brw_stats_block_discontiguous_rpc_samples\" WHERE (\"fs_name\" = '$fs_name' AND \"field\" = 'read_sample' AND \"ost_index\" = '$ost_index') AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Discontinuous Blocks in Each Read I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Sometimes an I/O is not able to be written/read in a single BIO on OST,  instead, multiple BIOs are submitted. The fragment number of this I/O equals to the BIO number. Usually, less fragments in the I/Os mean better performance.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 56
+      },
+      "id": 61,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_fragmented_io_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_fragmented_io_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'write_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Fragments in Each Write I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Sometimes an I/O is not able to be written/read in a single BIO on OST,  instead, multiple BIOs are submitted. The fragment number of this I/O equals to the BIO number. Usually, less fragments in the I/Os mean better performance.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 56
+      },
+      "id": 62,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_fragmented_io_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_fragmented_io_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'read_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Fragments in Each Read I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The in-flight I/O number means the BIO that have started but not ended yet. Thus, when starting a BIO, the in-flight I/O increases. By contrast, when a BIO ends, the in-flight I/O number decreases. And when starting a BIO, the current in-flight I/O number will be collected. More in-flight I/Os means more concurrent I/Os on this OST, and thus heavier load for the OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 64
+      },
+      "id": 63,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_io_in_flight_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_io_in_flight_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'write_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of In-fight Write I/O Number when Starting Each Write I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The in-flight I/O number means the BIO that have started but not ended yet. Thus, when starting a BIO, the in-flight I/O increases. By contrast, when a BIO ends, the in-flight I/O number decreases. And when starting a BIO, the current in-flight I/O number will be collected. More in-flight I/Os means more concurrent I/Os on this OST, and thus heavier load for the OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 64
+      },
+      "id": 64,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_io_in_flight_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_io_in_flight_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'read_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of In-fight Read I/O Number when Starting Each Read I/O",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The I/O time is the elasped time length between an I/O (Not BIO. A single I/O could sumbit multiple BIOs) starts and ends. Less I/O time of course is better.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 72
+      },
+      "id": 65,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_io_time_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_io_time_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'write_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Write I/O Time",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The I/O time is the elasped time length between an I/O (Not BIO. A single I/O could sumbit multiple BIOs) starts and ends. Less I/O time of course is better.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 72
+      },
+      "id": 66,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_io_time_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_io_time_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'read_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Read I/O Time",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The I/O size on disk is the size of submitted BIO. Usually, bigger I/O size means better performance.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 80
+      },
+      "id": 67,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_io_size_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_io_size_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'write_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "write_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Write I/O Size on Disk",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The I/O size is the size of submitted BIO. Usually, bigger I/O size means better performance.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 80
+      },
+      "id": 68,
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_size",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "size"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_brw_stats_io_size_samples",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"sum\" FROM \"cqm_ost_brw_stats_io_size_samples-field-fs_name-size\" WHERE \"fs_name\" = '$fs_name' AND \"field\" = 'read_sample' AND $timeFilter GROUP BY \"size\"",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "field",
+              "operator": "=",
+              "value": "read_sample"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Distribution of Read I/O Size on Disk",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The write throughput for each client.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 88
+      },
+      "id": 70,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "$tag_exp_client",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "exp_client"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "exp_ost_stats_bytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "write"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Write Throughput per Client",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "The read throughput for each client.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 88
+      },
+      "id": 79,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "$tag_exp_client",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "exp_client"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "exp_ost_stats_bytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"exp_ost_stats_bytes\" WHERE (\"fs_name\" = '$fs_name' AND \"optype\" = 'read' AND \"ost_index\" = '$ost_index') AND $timeFilter GROUP BY \"exp_client\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "read"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Read Throughput per Client",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 96
+      },
+      "id": 46,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "$tag_job_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "job_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "cqm_ost_jobstats_bytes-fs_name-job_id-ost_index",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"sum\") FROM \"cqm_ost_jobstats_bytes\" WHERE ( \"optype\" = 'sum_write_bytes' OR \"optype\" = 'sum_read_bytes' ) AND \"fs_name\" = '$fs_name' AND $timeFilter GROUP BY time(1m), \"job_id\" fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "I/O Throughput per Job",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 96
+      },
+      "id": 10,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "$tag_job_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "job_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_jobstats_bytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"sum\") FROM \"cqm_ost_jobstats_bytes\" WHERE \"optype\" = 'sum_write_bytes' AND \"fs_name\" = '$fs_name' AND $timeFilter GROUP BY time(1m), \"job_id\" fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "optype",
+              "operator": "=",
+              "value": "sum_write_bytes"
+            },
+            {
+              "condition": "AND",
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Write Throughput per Job",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 104
+      },
+      "id": 29,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "$tag_job_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "job_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_jobstats_bytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"sum\") FROM \"cqm_ost_jobstats_bytes\" WHERE ( \"optype\" = 'sum_write_bytes' OR \"optype\" = 'sum_read_bytes' ) AND \"fs_name\" = '$fs_name' AND $timeFilter GROUP BY time(1m), \"job_id\" fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "optype",
+              "operator": "=",
+              "value": "sum_read_bytes"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Read Throughput per Job",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 104
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "$tag_job_id",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "job_id"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "cqm_mdt_jobstats_samples-fs_name-job_id",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            }
+          ]
+        }
+      ],
+      "title": "Metadata Performance per Job",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "reducers": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "LDLM lock number allocated on this OST.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 112
+      },
+      "id": 86,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "LDLM Lock Count",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_lock_count",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "LDLM Lock Count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "Number of times this OST evicted clients due to lack of reply to ASTs.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 112
+      },
+      "id": 87,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "LDLM Lock Timeouts",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [],
+          "measurement": "ost_lock_timeouts",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "LDLM Lock Timeouts",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "When Lustre OST/MDT service re-mounted, a recovery process will be started to recover the connections to the clients.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 120
+      },
+      "id": 88,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "alias": "$tag_optype",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "optype"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "ost_recovery_status",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "fs_name",
+              "operator": "=",
+              "value": "$fs_name"
+            },
+            {
+              "condition": "AND",
+              "key": "ost_index",
+              "operator": "=",
+              "value": "$ost_index"
+            }
+          ]
+        }
+      ],
+      "title": "Number of Recovery Clients",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "$BARRELEYE_DATASOURCE_NAME"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Filesystem Name",
+        "multi": false,
+        "name": "fs_name",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"ost_kbytesinfo_free\" WITH KEY = fs_name",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "$BARRELEYE_DATASOURCE_NAME"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "OST Index",
+        "multi": false,
+        "name": "ost_index",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"ost_kbytesinfo_free\" WITH KEY = ost_index WHERE \"fs_name\" = '$fs_name'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "InfluxDB",
+          "value": "HydPB2enz"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "BARRELEYE_DATASOURCE_NAME",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1m"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "Lustre OST",
+  "uid": "pm7AL2e7z",
+  "version": 6,
+  "weekStart": ""
+}
